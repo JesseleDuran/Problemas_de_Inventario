@@ -2,8 +2,6 @@
 package problema_inventario.vistas;
 
 import javax.swing.ButtonGroup;
-import problema_inventario.models.DeterministaBasico;
-import problema_inventario.models.DeterministaDescuento;
 
 /**
  *
@@ -194,6 +192,15 @@ public class MainFrame extends javax.swing.JFrame
         {
             DeterministaBasicoView basicoFrame = new DeterministaBasicoView(unidad);
             basicoFrame.setVisible(true);        
+        }
+        else if(jRadioButtonDescuento.isSelected()==true)
+        {
+            /*DeterministaDescuentoView descuentoFrame = new DeterministaDescuentoView(unidad);
+            descuentoFrame.setVisible(true);*/    
+        }else if(jRadioButtonEscasez.isSelected()==true)
+        {
+            /*DeterministaEscasezView escasezFrame = new DeterministaEscasezView(unidad);
+            escasezFrame.setVisible(true);*/    
         }
         
     }//GEN-LAST:event_acceptButtonActionPerformed

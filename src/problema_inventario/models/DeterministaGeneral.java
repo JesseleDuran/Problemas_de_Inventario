@@ -64,15 +64,22 @@ public abstract class DeterministaGeneral
     {
         if(costo_mantener.indexOf("%")!=-1)
         {
-            float hd;
-           hd = (Float.parseFloat(costo_mantener.replaceAll("%", "")))/100;
-           hd = hd*costo_adquisicion;
+           float hd = 0;
+           String antes = "";
+           antes = costo_mantener.replaceAll("%", "");
+           hd = Float.parseFloat(antes);
+           hd= hd/100;
            this.costo_mantener = hd;
         }
         else
         {
             this.costo_mantener = (Float.parseFloat(costo_mantener));
         }  
+    }
+
+    public float setCosto_mantenerCalcularHd()
+    {
+        return costo_mantener *costo_adquisicion;
     }
 
     public float getTiempo_carga() 
