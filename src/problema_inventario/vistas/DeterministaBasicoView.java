@@ -51,6 +51,8 @@ public class DeterministaBasicoView extends javax.swing.JFrame
         adquisicionInput = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         descuentoInput = new javax.swing.JTextField();
+        escasezLabel = new javax.swing.JLabel();
+        escasezInput = new javax.swing.JTextField();
         eraseButton = new javax.swing.JButton();
         resolveButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -132,6 +134,18 @@ public class DeterministaBasicoView extends javax.swing.JFrame
             }
         });
 
+        escasezLabel.setFont(new java.awt.Font("Roboto Cn", 1, 12)); // NOI18N
+        escasezLabel.setText("Costo de Escasez");
+        escasezLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        escasezInput.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        escasezInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        escasezInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                escasezInputActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,6 +153,7 @@ public class DeterministaBasicoView extends javax.swing.JFrame
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(escasezLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,7 +170,8 @@ public class DeterministaBasicoView extends javax.swing.JFrame
                     .addComponent(mantenimientoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                     .addComponent(tiempoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                     .addComponent(adquisicionInput, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-                    .addComponent(descuentoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)))
+                    .addComponent(descuentoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                    .addComponent(escasezInput, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +203,10 @@ public class DeterministaBasicoView extends javax.swing.JFrame
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(descuentoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(escasezLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(escasezInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         eraseButton.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
@@ -216,22 +235,22 @@ public class DeterministaBasicoView extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addComponent(eraseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(resolveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(113, 113, 113))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eraseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(resolveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -305,6 +324,10 @@ public class DeterministaBasicoView extends javax.swing.JFrame
     private void descuentoInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descuentoInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_descuentoInputActionPerformed
+
+    private void escasezInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escasezInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_escasezInputActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -314,6 +337,8 @@ public class DeterministaBasicoView extends javax.swing.JFrame
     private javax.swing.JTextField descuentoInput;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton eraseButton;
+    private javax.swing.JTextField escasezInput;
+    private javax.swing.JLabel escasezLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -336,7 +361,8 @@ public class DeterministaBasicoView extends javax.swing.JFrame
     {
       jLabel3.setText("Demanda por " + unidad);
       jLabel5.setText("Costo unitario de mantenimiento por " + unidad+":");
-      jLabel6.setText("Tiempo de espera para una nueva orden en " + unidad+":");  
+      jLabel6.setText("Tiempo de espera para una nueva orden en " + unidad+":");
+      escasezLabel.setText("Costo de escasez unitaria por "+ unidad+":");
     }
      
     private void initButtons()
