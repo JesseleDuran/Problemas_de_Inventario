@@ -38,7 +38,8 @@ public class DeterministaDescuento extends DeterministaBasico
         return limiteInfDescuento;
     }
 
-    public void setLimiteInfDescuento(ArrayList<Double> limiteInfDescuento) {
+    public void setLimiteInfDescuento(ArrayList<Double> limiteInfDescuento) 
+    {
         this.limiteInfDescuento = limiteInfDescuento;
     }
 
@@ -117,8 +118,7 @@ public class DeterministaDescuento extends DeterministaBasico
                 if(listaEOQ.get(i) <  limiteInfDescuento.get(i) || (listaEOQ.get(i) > sup.get(i)) ) 
                 {
                     listaEOQ.set(i,limiteInfDescuento.get(i));   
-                }
-                      
+                }       
             }      
         }
     }
@@ -164,8 +164,6 @@ public class DeterministaDescuento extends DeterministaBasico
         ArrayList<Float> listaCostosCompra = calcularCostoCompra();
         ArrayList<Double> listaCostosF = calcularCostoFijo();
 
-        
-
         for (int i = 0; i<listaEOQ.size(); i++)
         {
             listaTCU.add(listaCostoAlmacenamiento.get(i)+listaCostosCompra.get(i)+listaCostosF.get(i));
@@ -174,7 +172,48 @@ public class DeterministaDescuento extends DeterministaBasico
         return listaTCU;
     }
 
-    
-    
-    
+    public int calcularMenorElemento()
+    {
+        ArrayList<Double> listaTCUs = calcularListaTCU();
+        int indice_menor = 0;
+        double menor= 0;
+
+        for (int i = 0; i<listaTCUs.size(); i++)
+        {   
+            if(i == 0) 
+            {
+                menor = listaTCUs.get(i);
+            }  
+            else
+            {
+                if(listaTCUs.get(i) < menor) 
+                {
+                    menor = listaTCUs.get(i);
+                    indice_menor = i;
+                }
+            }
+        }
+
+        return indice_menor;
+    }
+
+    public ArrayList<String> llenarFactibilidad()
+    {
+        ArrayList<String> listaFactible = new ArrayList<String>();
+        int efectivo = calcularMenorElemento();
+
+        for (int i = 0; i<listaEOQ.size(); i++)
+        {   
+            if(i == efectivo) 
+            {
+                listaFactible.add("Si");    
+            }
+            listaFactible.add("No");
+        }
+        
+        return listaFactible;
+
+    }
+
+  
 }

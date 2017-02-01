@@ -26,13 +26,13 @@ public class DeterministaBasico extends DeterministaGeneral
     @Override
     public float calcularCantidadOptimaOrdenar() 
     {
-        return (float) Math.sqrt((2*costo_orden*demanda)/setCosto_mantenerCalcularHd()); //EOQ  
+        return (float) Math.sqrt((2*costo_orden*demanda)/getCosto_mantener()); //EOQ  
     }
 
     @Override
     public float calcularCostoTotalMantenimiento() 
     {
-        return setCosto_mantenerCalcularHd()*(calcularCantidadOptimaOrdenar()/2);
+        return getCosto_mantener()*(calcularCantidadOptimaOrdenar()/2);
         
     }
 

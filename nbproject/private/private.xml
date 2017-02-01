@@ -3,12 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/vistas/GraphicForm.java</file>
             <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/vistas/RespuestaBasicoView.java</file>
             <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/vistas/MainFrame.java</file>
             <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/models/DeterministaBasico.java</file>
-            <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/Problema_Inventario.java</file>
+            <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/vistas/PuntosDeQuiebreView.java</file>
+            <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/models/DeterministaEscasez.java</file>
             <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/vistas/DeterministaBasicoView.java</file>
             <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/models/DeterministaGeneral.java</file>
+            <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/models/DeterministaDescuento.java</file>
+            <file>file:/C:/Users/Slaush/Documents/NetBeansProjects/Problema_Inv/src/problema_inventario/vistas/RespuestaDescuentoView.java</file>
         </group>
     </open-files>
 </project-private>

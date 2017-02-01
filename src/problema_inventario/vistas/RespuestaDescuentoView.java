@@ -47,7 +47,7 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
         respuestaDesPanel.setLayout(respuestaDesPanelLayout);
         respuestaDesPanelLayout.setHorizontalGroup(
             respuestaDesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 692, Short.MAX_VALUE)
+            .addGap(0, 733, Short.MAX_VALUE)
         );
         respuestaDesPanelLayout.setVerticalGroup(
             respuestaDesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +89,7 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private void initPanel()
     {
-        respuestaDesPanel.setLayout(new GridLayout(intervalos+3, 6));
+        respuestaDesPanel.setLayout(new GridLayout(intervalos+1, 6));
         nLabels = new ArrayList<JLabel>();
         limites = new ArrayList<JLabel>(); 
         descuentos = new ArrayList<JLabel>();
@@ -107,9 +107,9 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
         
         problema.calcularListaCantidadOptimaOrdenar();
         ArrayList<Double> total = problema.calcularListaTCU();
-  
-   
         
+        ArrayList<String> listaFactible = problema.llenarFactibilidad();
+  
         respuestaDesPanel.removeAll();
         
         for (int i = 0; i<intervalos ; i++) 
@@ -117,9 +117,10 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
 
             nLabels.add(crearLabel(Integer.toString(i)));
             limites.add(crearLabel(Double.toString(limitInf.get(i)) + "-" + Double.toString(limitSup.get(i))));
-            descuentos.add(crearLabel(Float.toString(porcent.get(i))));
+            descuentos.add(crearLabel(Float.toString(porcent.get(i)) + "%"));
             cantidadOrdenar.add(crearLabel(Double.toString(problema.getListaEOQ().get(i))));
             TCU.add(crearLabel(Double.toString(total.get(i))));
+            factibilidad.add(crearLabel(listaFactible.get(i)));
         }
         
         addDescuentosPanel();   
@@ -163,12 +164,12 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
                 respuestaDesPanel.add(crearLabel("Factibilidad"));           
             }
             
-
             respuestaDesPanel.add(nLabels.get(i));
             respuestaDesPanel.add(limites.get(i));
             respuestaDesPanel.add(descuentos.get(i));
             respuestaDesPanel.add(cantidadOrdenar.get(i));
             respuestaDesPanel.add(TCU.get(i));
+            respuestaDesPanel.add(factibilidad.get(i));
                   
         }
     } 

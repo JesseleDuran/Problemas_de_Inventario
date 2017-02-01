@@ -282,7 +282,7 @@ public class DeterministaBasicoView extends javax.swing.JFrame
             
             descuentoDeter.setDemanda(Integer.parseInt(demandaInput.getText()));
             descuentoDeter.setCosto_orden(Float.parseFloat(ordenInput.getText()));
-            if(tiempoInput.getText() != "")
+            if(tiempoInput.getText().isEmpty() != true)
             {
                 descuentoDeter.setTiempo_carga(Float.parseFloat(tiempoInput.getText()));   
             }

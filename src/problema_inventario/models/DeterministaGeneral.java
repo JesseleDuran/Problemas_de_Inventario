@@ -16,6 +16,7 @@ public abstract class DeterministaGeneral
     protected float costo_mantener; //h, si tiene "%" varía EOQ y demás ecuaciones
     protected float tiempo_carga; //L
     protected float costo_adquisicion; //p
+    protected boolean hdB;
     
     public DeterministaGeneral()
     {
@@ -57,6 +58,10 @@ public abstract class DeterministaGeneral
 
     public float getCosto_mantener() 
     {
+        if (hdB == true) 
+        {
+            setCosto_mantenerCalcularHd();
+        }
         return costo_mantener;
     }
 
@@ -70,11 +75,14 @@ public abstract class DeterministaGeneral
            hd = Float.parseFloat(antes);
            hd= hd/100;
            this.costo_mantener = hd;
+           hdB = true;
         }
         else
         {
             this.costo_mantener = (Float.parseFloat(costo_mantener));
-        }  
+        } 
+
+         
     }
 
     public float setCosto_mantenerCalcularHd()
