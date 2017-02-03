@@ -89,7 +89,7 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private void initPanel()
     {
-        respuestaDesPanel.setLayout(new GridLayout(intervalos+1, 6));
+        respuestaDesPanel.setLayout(new GridLayout(intervalos+2, 6));
         nLabels = new ArrayList<JLabel>();
         limites = new ArrayList<JLabel>(); 
         descuentos = new ArrayList<JLabel>();
@@ -112,7 +112,7 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
   
         respuestaDesPanel.removeAll();
         
-        for (int i = 0; i<intervalos ; i++) 
+        for (int i = 0; i<intervalos+1 ; i++) 
         {
 
             nLabels.add(crearLabel(Integer.toString(i)));
@@ -152,7 +152,7 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
     
     private void addDescuentosPanel()
     {
-        for(int i = 0; i <intervalos; i++)
+        for(int i = 0; i <intervalos+1; i++)
         {
             if (i == 0) 
             {

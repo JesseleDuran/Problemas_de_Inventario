@@ -7,30 +7,26 @@ package problema_inventario.vistas;
 
 import Utils.GeneradorDeGraficas;
 import java.awt.GridLayout;
-import javax.swing.WindowConstants;
 import org.jfree.chart.ChartPanel;
-import problema_inventario.models.DeterministaBasico;
 import problema_inventario.models.DeterministaGeneral;
 
 /**
  *
  * @author Slaush
  */
-public class GraphicForm extends javax.swing.JFrame {
+public class GraphicCostos extends javax.swing.JFrame {
 
     /**
-     * Creates new form GraphicForm
+     * Creates new form GraphicCostos
      */
-    public GraphicForm(DeterministaGeneral general, String unidad) 
+    public GraphicCostos(DeterministaGeneral general, String unidad) 
     {
-        
         this.problema = general;
         this.unidad = unidad;
         initComponents();
         initChart();
         initLayout();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-       
     }
 
     /**
@@ -60,11 +56,11 @@ public class GraphicForm extends javax.swing.JFrame {
         panelGrafica.setLayout(panelGraficaLayout);
         panelGraficaLayout.setHorizontalGroup(
             panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 566, Short.MAX_VALUE)
+            .addGap(0, 613, Short.MAX_VALUE)
         );
         panelGraficaLayout.setVerticalGroup(
             panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGap(0, 218, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -78,7 +74,7 @@ public class GraphicForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(248, 248, 248))
+                .addGap(272, 272, 272))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +92,8 @@ public class GraphicForm extends javax.swing.JFrame {
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_okButtonActionPerformed
-
+    
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton okButton;
@@ -119,7 +116,11 @@ public class GraphicForm extends javax.swing.JFrame {
     {
        chart = new ChartPanel(null);
        //Sigleton Pattern!
-       chart.setChart(GeneradorDeGraficas.getInstance().graficarInventario(problema, unidad));
+       chart.setChart(GeneradorDeGraficas.getInstance().graficarCostos(problema, unidad));
        //chart.setChart(GeneradorDeGraficas.getInstance().graficarCostos(problema, unidad));
    }
 }
+
+
+
+

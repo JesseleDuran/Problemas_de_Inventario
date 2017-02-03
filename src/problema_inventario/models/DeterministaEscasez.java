@@ -17,11 +17,13 @@ public class DeterministaEscasez extends DeterministaGeneral
     {
         super();
         escasez = 0;
+        tipo = "escasez";
     }
 
-    public DeterministaEscasez(int demanda, float costo_orden, float costo_mantener, float tiempo_carga, float costo_adquisicion, float escasez) {
-        super(demanda, costo_orden, costo_mantener, tiempo_carga, costo_adquisicion);
+    public DeterministaEscasez(int demanda, float costo_orden, float costo_mantener, float tiempo_carga, float costo_adquisicion, float escasez, String tipo) {
+        super(demanda, costo_orden, costo_mantener, tiempo_carga, costo_adquisicion, tipo);
         this.escasez = escasez;
+        this.tipo = tipo;
 
     }
 
@@ -32,6 +34,11 @@ public class DeterministaEscasez extends DeterministaGeneral
     public void setEscasez(float escasez) {
         this.escasez = escasez;
     }
+
+    public String getTipo()
+    {
+        return tipo;
+    }
  
     @Override
     public float calcularCantidadOptimaOrdenar() 
@@ -41,7 +48,7 @@ public class DeterministaEscasez extends DeterministaGeneral
 
     @Override
     public float calcularCostoTotalMantenimiento() {
-        return (float) (((Math.pow(calcularDeficitMaximo(), 2))*getCosto_mantener())*((calcularCantidadOptimaOrdenar())/2));
+        return (float) (((Math.pow(calcularInvMax(), 2))*getCosto_mantener())/((calcularCantidadOptimaOrdenar())*2));
     }
 
     @Override
@@ -49,19 +56,30 @@ public class DeterministaEscasez extends DeterministaGeneral
         return calcularCostoTotalColocarOrdenes() + calcularCostoTotalMantenimiento() + calcularCostoEscasez();
     }
 
-    public float calcularDeficitMaximo() 
+    public float calcularInvMax() 
     {
-    	return (float) Math.sqrt((2*costo_orden*demanda*escasez)/(getCosto_mantener()+escasez)*getCosto_mantener() );//M
+    	return (float) Math.sqrt((2*costo_orden*demanda*escasez)/((getCosto_mantener()+escasez)*getCosto_mantener()) );//M
     }
 
-    public float calcularNivelInventario()
+    public float calcularMaxOrdenesPendientes()
     {
-    	return calcularCantidadOptimaOrdenar() - calcularDeficitMaximo(); //EOQ - M
+    	return calcularCantidadOptimaOrdenar() - calcularInvMax(); //EOQ - M
+    }
+
+    public float calcularReorderPoint()
+    {
+        return  calcularInvMax() - calcularCantidadOptimaOrdenar(); //EOQ - M
     }
 
     public float calcularCostoEscasez()
     {
-    	return (float) ((Math.pow(calcularNivelInventario(), 2)*escasez)/2*calcularCantidadOptimaOrdenar());
+    	return (float) ((Math.pow(calcularMaxOrdenesPendientes(), 2)*escasez)/(2*calcularCantidadOptimaOrdenar()));
+    }
+
+    @Override
+    public float calcularMantenimientoGrafica(float eoq) 
+    {
+        return (float) (((Math.pow(calcularInvMax(), 2))*getCosto_mantener())/((eoq)*2));
     }
     
   

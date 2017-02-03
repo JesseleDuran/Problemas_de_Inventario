@@ -15,11 +15,12 @@ public class DeterministaBasico extends DeterministaGeneral
     public DeterministaBasico() 
     {
         super();
+        tipo = "basico";
     }
 
-    public DeterministaBasico(int demanda, float costo_orden, float costo_mantener, float tiempo_carga, float costo_adquisicion) 
+    public DeterministaBasico(int demanda, float costo_orden, float costo_mantener, float tiempo_carga, float costo_adquisicion, String tipo) 
     {
-        super(demanda, costo_orden, costo_mantener, tiempo_carga, costo_adquisicion);
+        super(demanda, costo_orden, costo_mantener, tiempo_carga, costo_adquisicion, tipo);
     }
     
 
@@ -40,6 +41,13 @@ public class DeterministaBasico extends DeterministaGeneral
     public float calcularTCU() 
     {
         return calcularCostoTotalColocarOrdenes() + calcularCostoTotalMaterial() + calcularCostoTotalMantenimiento();     
+    }
+
+    @Override
+    public float calcularMantenimientoGrafica(float eoq) 
+    {
+        return getCosto_mantener()*(eoq/2);
+        
     }
 
 

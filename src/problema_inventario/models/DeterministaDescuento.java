@@ -23,11 +23,12 @@ public class DeterministaDescuento extends DeterministaBasico
     public DeterministaDescuento() 
     {
         super();
+        tipo = "descuento";
     }
 
-    public DeterministaDescuento(int demanda, float costo_orden, float costo_mantener, float tiempo_carga, float costo_adquisicion, int cantidadPuntosDescuento) 
+    public DeterministaDescuento(int demanda, float costo_orden, float costo_mantener, float tiempo_carga, float costo_adquisicion, int cantidadPuntosDescuento, String tipo) 
     {
-        super(demanda, costo_orden, costo_mantener, tiempo_carga, costo_adquisicion);
+        super(demanda, costo_orden, costo_mantener, tiempo_carga, costo_adquisicion, tipo);
     }
 
     public ArrayList<Double> getListaEOQ() {
@@ -40,7 +41,15 @@ public class DeterministaDescuento extends DeterministaBasico
 
     public void setLimiteInfDescuento(ArrayList<Double> limiteInfDescuento) 
     {
-        this.limiteInfDescuento = limiteInfDescuento;
+        for (int i=0;i < limiteInfDescuento.size() ; i++ ) 
+        {
+            if (i == 0) 
+            {
+                this.limiteInfDescuento.add(0.0);
+            }  
+            this.limiteInfDescuento.add(limiteInfDescuento.get(i));
+            System.out.println(this.limiteInfDescuento.get(i));
+        }
     }
 
     public ArrayList<Float> calcularCostosAdquisicionDescuentos() 
@@ -63,7 +72,16 @@ public class DeterministaDescuento extends DeterministaBasico
 
     public void setDescuentos(ArrayList<Float> descuentos)
     {
-        this.descuentos = descuentos;
+        for (int i=0;i < descuentos.size() ; i++ ) 
+        {
+            if (i == 0) 
+            {
+                this.descuentos.add(0.0f);
+            }   
+            
+            this.descuentos.add(descuentos.get(i));
+            
+        }
     }
 
     public ArrayList<Float> getDescuentos()
@@ -167,7 +185,6 @@ public class DeterministaDescuento extends DeterministaBasico
         for (int i = 0; i<listaEOQ.size(); i++)
         {
             listaTCU.add(listaCostoAlmacenamiento.get(i)+listaCostosCompra.get(i)+listaCostosF.get(i));
-            System.out.println(listaTCU.get(i));
         }
         return listaTCU;
     }

@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import problema_inventario.models.DeterministaBasico;
 import problema_inventario.models.DeterministaDescuento;
+import problema_inventario.models.DeterministaEscasez;
 
 /**
  *
@@ -275,7 +276,7 @@ public class DeterministaBasicoView extends javax.swing.JFrame
 
     private void resolveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resolveButtonActionPerformed
         
-        if(descuentoInput.getText() != "")
+        if(descuentoInput.getText().isEmpty() != true)
         {
             DeterministaDescuento descuentoDeter = new DeterministaDescuento();//NO!!!, CAMBIAR!
             PuntosDeQuiebreView quiebre = new PuntosDeQuiebreView(0);
@@ -301,17 +302,47 @@ public class DeterministaBasicoView extends javax.swing.JFrame
             
             RespuestaDescuentoView respuestaDesFrame = new RespuestaDescuentoView(unidad, Integer.parseInt(descuentoInput.getText()), descuentoDeter);
             respuestaDesFrame.setVisible(true);     
-        }else
+        }
+        
+        if(escasezInput.getText().isEmpty() == true && descuentoInput.getText().isEmpty() == true)
         {
             DeterministaBasico basico = new DeterministaBasico();//NO!!!, CAMBIAR!
             basico.setDemanda(Integer.parseInt(demandaInput.getText()));
             basico.setCosto_orden(Float.parseFloat(ordenInput.getText()));
-            basico.setTiempo_carga(Float.parseFloat(tiempoInput.getText()));
-            basico.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText()));
+            if(tiempoInput.getText().isEmpty() != true)
+            {
+                basico.setTiempo_carga(Float.parseFloat(tiempoInput.getText())); 
+            }
+            
+            if(adquisicionInput.getText().isEmpty() != true)
+            {
+                basico.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText())); 
+            }
+            
             basico.setCosto_mantener(mantenimientoInput.getText());
             RespuestaBasicoView respuestaBasicoFrame = new RespuestaBasicoView(basico, unidad);
-            respuestaBasicoFrame.setVisible(true); 
+            respuestaBasicoFrame.setVisible(true);   
+        }
+        
+        if(escasezInput.getText().isEmpty() != true)
+        {
+            DeterministaEscasez escasezDeter = new DeterministaEscasez(); 
+            escasezDeter.setDemanda(Integer.parseInt(demandaInput.getText()));
+            escasezDeter.setCosto_orden(Float.parseFloat(ordenInput.getText()));
+            if(tiempoInput.getText().isEmpty() != true)
+            {
+                escasezDeter.setTiempo_carga(Float.parseFloat(tiempoInput.getText())); 
+            }
             
+            if(adquisicionInput.getText().isEmpty() != true)
+            {
+                escasezDeter.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText())); 
+            }
+            
+            escasezDeter.setCosto_mantener(mantenimientoInput.getText());
+            escasezDeter.setEscasez(Float.parseFloat(escasezInput.getText()));
+            RespuestaBasicoView respuestaBasicoFrame = new RespuestaBasicoView(escasezDeter, unidad);
+            respuestaBasicoFrame.setVisible(true);
         }
             
            

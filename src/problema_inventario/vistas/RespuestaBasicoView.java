@@ -6,6 +6,8 @@
 package problema_inventario.vistas;
 
 import problema_inventario.models.DeterministaBasico;
+import problema_inventario.models.DeterministaEscasez;
+import problema_inventario.models.DeterministaGeneral;
 
 /**
  *
@@ -16,12 +18,26 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
     /**
      * Creates new form RespuestaBasicoView
      */
-    public RespuestaBasicoView(DeterministaBasico basico, String unidad) 
+    public RespuestaBasicoView(DeterministaGeneral general, String unidad) 
     {
         super("Análisis de costos de inventario por "+ unidad + " para el modelo Determinista Básico");
         initComponents();
         initLabel(unidad);
-        initResult(basico);
+        this.problema = general;
+        System.out.println(problema);  
+        this.unidad = unidad;
+        if(general.getTipo().equals("basico"))
+        {
+            initResultBasico(general);
+            
+        }
+        else
+        {
+            initResultEscasez((DeterministaEscasez) general);
+            
+        }
+        
+        
     }
 
     /**
@@ -35,10 +51,10 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        demandaLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        mantenimientoLabel = new javax.swing.JLabel();
+        leadTimeLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         demandaInput = new javax.swing.JTextField();
@@ -49,23 +65,32 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        intervaloLabel = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        pedidosLabel = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         EOQInput = new javax.swing.JTextField();
         InvInput = new javax.swing.JTextField();
         toInput = new javax.swing.JTextField();
-        reordenInput = new javax.swing.JTextField();
+        pendientesInput = new javax.swing.JTextField();
         colocarOrdenesInput = new javax.swing.JTextField();
         costoMantenimientoInput = new javax.swing.JTextField();
         TCUInput = new javax.swing.JTextField();
         costoMaterialInput = new javax.swing.JTextField();
         nPedidosInput = new javax.swing.JTextField();
+        backorderLabel = new javax.swing.JLabel();
+        reorderInput = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        costoEscasezInput = new javax.swing.JTextField();
+        escasezMostrarLabel = new javax.swing.JLabel();
+        escasezResult = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        curvaButton = new javax.swing.JButton();
+        cierraButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,10 +101,11 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         jLabel1.setText("DATOS DE ENTRADA");
         jLabel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        demandaLabel.setBackground(new java.awt.Color(255, 255, 255));
+        demandaLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        demandaLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        demandaLabel.setText("Demanda");
+        demandaLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
@@ -87,15 +113,17 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         jLabel3.setText("Costo de orden");
         jLabel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        mantenimientoLabel.setBackground(new java.awt.Color(255, 255, 255));
+        mantenimientoLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        mantenimientoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mantenimientoLabel.setText("Costo de mantenimiento");
+        mantenimientoLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        leadTimeLabel.setBackground(new java.awt.Color(255, 255, 255));
+        leadTimeLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        leadTimeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        leadTimeLabel.setText("Lead Time");
+        leadTimeLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
@@ -175,15 +203,16 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         jLabel10.setText("Inventario máximo");
         jLabel10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        intervaloLabel.setBackground(new java.awt.Color(255, 255, 255));
+        intervaloLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        intervaloLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        intervaloLabel.setText("Intervalo");
+        intervaloLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Punto de reorden");
+        jLabel12.setText("Punto para el nuevo pedido");
         jLabel12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
@@ -210,10 +239,11 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         jLabel16.setText("Costo total de material");
         jLabel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel18.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel18.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        pedidosLabel.setBackground(new java.awt.Color(255, 255, 255));
+        pedidosLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        pedidosLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pedidosLabel.setText("Cantidad de Pedidos");
+        pedidosLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel19.setFont(new java.awt.Font("Roboto Cn", 1, 14)); // NOI18N
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -250,13 +280,13 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
             }
         });
 
-        reordenInput.setEditable(false);
-        reordenInput.setBackground(new java.awt.Color(255, 255, 255));
-        reordenInput.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
-        reordenInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        reordenInput.addActionListener(new java.awt.event.ActionListener() {
+        pendientesInput.setEditable(false);
+        pendientesInput.setBackground(new java.awt.Color(255, 255, 255));
+        pendientesInput.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        pendientesInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pendientesInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reordenInputActionPerformed(evt);
+                pendientesInputActionPerformed(evt);
             }
         });
 
@@ -310,55 +340,128 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
             }
         });
 
+        backorderLabel.setBackground(new java.awt.Color(255, 255, 255));
+        backorderLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        backorderLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backorderLabel.setText("Máximo de órdenes pendientes");
+        backorderLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        reorderInput.setEditable(false);
+        reorderInput.setBackground(new java.awt.Color(255, 255, 255));
+        reorderInput.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        reorderInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        reorderInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reorderInputActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Costo total de escasez");
+        jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        costoEscasezInput.setEditable(false);
+        costoEscasezInput.setBackground(new java.awt.Color(255, 255, 255));
+        costoEscasezInput.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        costoEscasezInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        costoEscasezInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                costoEscasezInputActionPerformed(evt);
+            }
+        });
+
+        escasezMostrarLabel.setBackground(new java.awt.Color(255, 255, 255));
+        escasezMostrarLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        escasezMostrarLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        escasezMostrarLabel.setText("escasez");
+        escasezMostrarLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        escasezResult.setEditable(false);
+        escasezResult.setBackground(new java.awt.Color(255, 255, 255));
+        escasezResult.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        escasezResult.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        escasezResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                escasezResultActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(costoInput)
-                        .addComponent(demandaInput, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                        .addComponent(mantenimientoInput)
-                        .addComponent(leadTimeInput)
-                        .addComponent(adquisicionInput))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                                .addComponent(leadTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mantenimientoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(demandaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(escasezMostrarLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(escasezResult, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(132, 132, 132)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(236, 236, 236)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(costoInput)
+                                    .addComponent(demandaInput, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                    .addComponent(mantenimientoInput)
+                                    .addComponent(leadTimeInput)
+                                    .addComponent(adquisicionInput))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(intervaloLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(backorderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pedidosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(TCUInput, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(costoMantenimientoInput, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(colocarOrdenesInput, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(reordenInput, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(EOQInput, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(InvInput, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(toInput, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(InvInput, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(costoMaterialInput)
-                    .addComponent(nPedidosInput))
+                    .addComponent(reorderInput)
+                    .addComponent(nPedidosInput)
+                    .addComponent(costoEscasezInput)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TCUInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(colocarOrdenesInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pendientesInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(toInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -373,7 +476,7 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(demandaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(demandaInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,37 +487,43 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(costoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(InvInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(InvInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mantenimientoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(toInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(reordenInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(leadTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mantenimientoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(mantenimientoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(backorderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(pendientesInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(leadTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(leadTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(intervaloLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(toInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(adquisicionInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(colocarOrdenesInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(reorderInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(colocarOrdenesInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(escasezMostrarLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(escasezResult, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(costoMantenimientoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(costoEscasezInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,10 +533,49 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(costoMaterialInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pedidosLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nPedidosInput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(42, 42, 42))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Gráficas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Roboto Cn", 0, 18))); // NOI18N
+
+        curvaButton.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        curvaButton.setText("Análisis de Costo de Inventario");
+        curvaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                curvaButtonActionPerformed(evt);
+            }
+        });
+
+        cierraButton.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        cierraButton.setText("Perfil del Inventario");
+        cierraButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cierraButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(cierraButton, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(curvaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(curvaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cierraButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -436,15 +584,19 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -482,9 +634,9 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_toInputActionPerformed
 
-    private void reordenInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reordenInputActionPerformed
+    private void pendientesInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendientesInputActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_reordenInputActionPerformed
+    }//GEN-LAST:event_pendientesInputActionPerformed
 
     private void colocarOrdenesInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colocarOrdenesInputActionPerformed
         // TODO add your handling code here:
@@ -506,61 +658,110 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nPedidosInputActionPerformed
 
+    private void reorderInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reorderInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reorderInputActionPerformed
+
+    private void costoEscasezInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_costoEscasezInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_costoEscasezInputActionPerformed
+
+    private void escasezResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_escasezResultActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_escasezResultActionPerformed
+
+    private void curvaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_curvaButtonActionPerformed
+
+        GraphicCostos costosGrafica = new GraphicCostos(problema, unidad);
+        costosGrafica.setVisible(true);
+    }//GEN-LAST:event_curvaButtonActionPerformed
+
+    private void cierraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cierraButtonActionPerformed
+        
+        GraphicForm cierraGrafica = new GraphicForm(problema, unidad);
+        cierraGrafica.setVisible(true);
+    }//GEN-LAST:event_cierraButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField EOQInput;
     private javax.swing.JTextField InvInput;
     private javax.swing.JTextField TCUInput;
     private javax.swing.JTextField adquisicionInput;
+    private javax.swing.JLabel backorderLabel;
+    private javax.swing.JButton cierraButton;
     private javax.swing.JTextField colocarOrdenesInput;
+    private javax.swing.JTextField costoEscasezInput;
     private javax.swing.JTextField costoInput;
     private javax.swing.JTextField costoMantenimientoInput;
     private javax.swing.JTextField costoMaterialInput;
+    private javax.swing.JButton curvaButton;
     private javax.swing.JTextField demandaInput;
+    private javax.swing.JLabel demandaLabel;
+    private javax.swing.JLabel escasezMostrarLabel;
+    private javax.swing.JTextField escasezResult;
+    private javax.swing.JLabel intervaloLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField leadTimeInput;
+    private javax.swing.JLabel leadTimeLabel;
     private javax.swing.JTextField mantenimientoInput;
+    private javax.swing.JLabel mantenimientoLabel;
     private javax.swing.JTextField nPedidosInput;
-    private javax.swing.JTextField reordenInput;
+    private javax.swing.JLabel pedidosLabel;
+    private javax.swing.JTextField pendientesInput;
+    private javax.swing.JTextField reorderInput;
     private javax.swing.JTextField toInput;
     // End of variables declaration//GEN-END:variables
+    public DeterministaGeneral problema;
+    public String unidad;
+    
     private void initLabel(String unidad) 
     {
-      jLabel2.setText("Demanda por " + unidad);
-      jLabel4.setText("Costo de mantenimiento por " + unidad);
-      jLabel5.setText("Tiempo de espera en " + unidad);
-      jLabel11.setText("Intervalo de órdenes en "+ unidad);
-      jLabel18.setText("Cantidad de pedidos en "+ unidad); 
+      demandaLabel.setText("Demanda por " + unidad+":");
+      mantenimientoLabel.setText("Costo de mantenimiento por " + unidad+":");
+      leadTimeLabel.setText("Tiempo de espera en " + unidad+":");
+      intervaloLabel.setText("Intervalo de órdenes en "+ unidad+":");
+      pedidosLabel.setText("Cantidad de pedidos en "+ unidad+":");
+      escasezMostrarLabel.setText("Costo de escasez unitaria por "+unidad+":");
     }
     
-    private void initResult(DeterministaBasico basico)
+    private void initResultBasico(DeterministaGeneral basico)
     {
         EOQInput.setText(Float.toString(basico.calcularCantidadOptimaOrdenar()));
+        
         InvInput.setText(Float.toString(basico.calcularCantidadOptimaOrdenar()));
+        
+        pendientesInput.setText("0");
+        
         toInput.setText(Float.toString(basico.calcularTiempoEntreOrdenes()));
-        reordenInput.setText(Float.toString(basico.calcularPtoReorden()));
+        
+        reorderInput.setText(Float.toString(basico.calcularPtoReorden()));
+        
         colocarOrdenesInput.setText(Float.toString(basico.calcularCostoTotalColocarOrdenes()));
+        
         costoMantenimientoInput.setText(Float.toString(basico.calcularCostoTotalMantenimiento()));
+        
+        costoEscasezInput.setText("0");
+        
         TCUInput.setText(Float.toString(basico.calcularTCU()));
+        
         costoMaterialInput.setText(Float.toString(basico.calcularCostoTotalMaterial()));
+        
         nPedidosInput.setText(Float.toString(basico.calcularCantidadPedidosXTiempo()));
         
         demandaInput.setText(Float.toString(basico.getDemanda()));
@@ -568,6 +769,39 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         mantenimientoInput.setText(Float.toString(basico.getCosto_mantener()));
         leadTimeInput.setText(Float.toString(basico.getTiempo_carga()));
         adquisicionInput.setText(Float.toString(basico.getCosto_adquisicion()));
+          
+    }
+    
+    private void initResultEscasez(DeterministaEscasez escasez)
+    {
+        EOQInput.setText(Float.toString(escasez.calcularCantidadOptimaOrdenar()));
+        
+        InvInput.setText(Float.toString(escasez.calcularInvMax()));
+        
+        pendientesInput.setText(Float.toString(escasez.calcularMaxOrdenesPendientes()));
+        
+        toInput.setText(Float.toString(escasez.calcularTiempoEntreOrdenes()));
+        
+        reorderInput.setText(Float.toString(escasez.calcularReorderPoint()));
+        
+        colocarOrdenesInput.setText(Float.toString(escasez.calcularCostoTotalColocarOrdenes()));
+        
+        costoMantenimientoInput.setText(Float.toString(escasez.calcularCostoTotalMantenimiento()));
+        
+        costoEscasezInput.setText(Float.toString(escasez.calcularCostoEscasez()));
+        
+        TCUInput.setText(Float.toString(escasez.calcularTCU()));
+        
+        costoMaterialInput.setText(Float.toString(escasez.calcularCostoTotalMaterial()));
+        
+        nPedidosInput.setText(Float.toString(escasez.calcularCantidadPedidosXTiempo()));
+        
+        demandaInput.setText(Float.toString(escasez.getDemanda()));
+        costoInput.setText(Float.toString(escasez.getCosto_orden()));
+        mantenimientoInput.setText(Float.toString(escasez.getCosto_mantener()));
+        leadTimeInput.setText(Float.toString(escasez.getTiempo_carga()));
+        adquisicionInput.setText(Float.toString(escasez.getCosto_adquisicion()));
+        escasezResult.setText(Float.toString(escasez.getEscasez()));
           
     }
 
