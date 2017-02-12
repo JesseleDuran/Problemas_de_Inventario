@@ -34,6 +34,7 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
         
         initPanel();
         addtablaInput();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

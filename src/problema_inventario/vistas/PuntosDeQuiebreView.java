@@ -31,6 +31,7 @@ public class PuntosDeQuiebreView extends javax.swing.JFrame {
         this.intervalos = intervalos;
         initPanel();
         addQuiebresInput();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
     }
 
@@ -109,6 +110,8 @@ public class PuntosDeQuiebreView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
+        
+        
         setPorcentaje();
         setLimite();       
         dispose();

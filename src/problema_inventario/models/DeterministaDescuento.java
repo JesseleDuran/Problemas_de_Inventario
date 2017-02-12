@@ -14,10 +14,10 @@ import java.util.ArrayList;
  */
 public class DeterministaDescuento extends DeterministaBasico
 {
-	ArrayList<Double> limiteInfDescuento = new ArrayList<Double>();
-         
-        ArrayList<Float> descuentos = new ArrayList<Float>();//LISTA DE LOS DESCUENTOS (4%, 5%...) que pasarán a ser 0.04, 0.05
-        ArrayList<Double> listaEOQ = new ArrayList<Double>();
+    DeterministaBasico optimo;
+    ArrayList<Double> limiteInfDescuento = new ArrayList<Double>();  
+    ArrayList<Float> descuentos = new ArrayList<Float>();//LISTA DE LOS DESCUENTOS (4%, 5%...) que pasarán a ser 0.04, 0.05
+    ArrayList<Double> listaEOQ = new ArrayList<Double>();
 
 
     public DeterministaDescuento() 
@@ -45,10 +45,10 @@ public class DeterministaDescuento extends DeterministaBasico
         {
             if (i == 0) 
             {
-                this.limiteInfDescuento.add(0.0);
+                this.limiteInfDescuento.add(1.0);
             }  
             this.limiteInfDescuento.add(limiteInfDescuento.get(i));
-            System.out.println(this.limiteInfDescuento.get(i));
+           
         }
     }
 
@@ -166,11 +166,12 @@ public class DeterministaDescuento extends DeterministaBasico
 
     public ArrayList<Double> calcularCostoAlmacenamiento()
     {
+         ArrayList<Float> costosAdquisicion = calcularCostosAdquisicionDescuentos();
         ArrayList<Double> listaCostoAlmacenamiento = new ArrayList<Double>();
 
-        for (Double cadaEOQ : listaEOQ)
+        for (int i = 0; i<listaEOQ.size(); i++)
         {
-            listaCostoAlmacenamiento.add(costo_mantener*(cadaEOQ/2));    
+            listaCostoAlmacenamiento.add(costo_mantener*(listaEOQ.get(i)/2)*costosAdquisicion.get(i));    
         }
         return listaCostoAlmacenamiento;
     }
@@ -229,6 +230,23 @@ public class DeterministaDescuento extends DeterministaBasico
         }
         
         return listaFactible;
+    }
+
+    //TERMINAR   
+    public void llenarOptimo()
+    {
+        int efectivo = calcularMenorElemento();    
+        ArrayList<Float> valorDescontado = calcularCostosAdquisicionDescuentos(); 
+
+        for (int i = 0; i<listaEOQ.size(); i++)
+        {   
+            if(i == efectivo) 
+            {
+                optimo.setCosto_adquisicion(valorDescontado.get(i));    
+            }
+        
+        }
+        System.out.println(optimo);
 
     }
 

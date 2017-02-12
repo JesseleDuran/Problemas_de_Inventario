@@ -72,6 +72,7 @@ public abstract class DeterministaGeneral
         if (hdB == true) 
         {
             setCosto_mantenerCalcularHd();
+            hdB= false;
         }
         return costo_mantener;
     }
@@ -90,15 +91,17 @@ public abstract class DeterministaGeneral
         }
         else
         {
+            hdB = false;
             this.costo_mantener = (Float.parseFloat(costo_mantener));
         } 
 
          
     }
 
-    public float setCosto_mantenerCalcularHd()
+    public void setCosto_mantenerCalcularHd()
     {
-        return costo_mantener *costo_adquisicion;
+        this.costo_mantener = costo_mantener *costo_adquisicion;
+        
     }
 
     public float getTiempo_carga() 
@@ -166,8 +169,9 @@ public abstract class DeterministaGeneral
     }
 
     public float calcularCantidadPedidosXTiempo()
-    {
-        return demanda*calcularCantidadOptimaOrdenar();
+    {  
+        return (demanda/calcularCantidadOptimaOrdenar()); //n
+        
     }
 
     @Override

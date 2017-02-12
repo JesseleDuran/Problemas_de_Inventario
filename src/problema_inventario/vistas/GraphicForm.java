@@ -94,7 +94,7 @@ public class GraphicForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        // TODO add your handling code here:
+        dispose() ;
     }//GEN-LAST:event_okButtonActionPerformed
 
 

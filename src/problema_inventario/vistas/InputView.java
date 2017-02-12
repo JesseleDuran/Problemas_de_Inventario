@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import problema_inventario.models.DeterministaBasico;
 import problema_inventario.models.DeterministaDescuento;
 import problema_inventario.models.DeterministaEscasez;
@@ -14,20 +16,21 @@ import problema_inventario.models.DeterministaEscasez;
  *
  * @author Jessele
  */
-public class DeterministaBasicoView extends javax.swing.JFrame 
+public class InputView extends javax.swing.JFrame 
 {
-    public DeterministaBasicoView(String unidad) 
+    public InputView(String unidad) 
     {
-        super("Problema de Cantidad Económica de Pedido (EOQ básico)");
+        super("Problema de Inventario Determinista");
         this.unidad = unidad;
         initComponents();
         initLabel();
         initButtons();
         restringirTeclas(); 
         jMenuBar1.setVisible(false);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
-    DeterministaBasicoView() 
+    InputView() 
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -86,7 +89,7 @@ public class DeterministaBasicoView extends javax.swing.JFrame
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel4.setFont(new java.awt.Font("Roboto Cn", 1, 12)); // NOI18N
-        jLabel4.setText("Costo de ordenar o cargar por orden:");
+        jLabel4.setText("Costo de orden:");
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         ordenInput.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
@@ -276,75 +279,117 @@ public class DeterministaBasicoView extends javax.swing.JFrame
 
     private void resolveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resolveButtonActionPerformed
         
-        if(descuentoInput.getText().isEmpty() != true)
-        {
-            DeterministaDescuento descuentoDeter = new DeterministaDescuento();//NO!!!, CAMBIAR!
-            PuntosDeQuiebreView quiebre = new PuntosDeQuiebreView(0);
-            
-            descuentoDeter.setDemanda(Integer.parseInt(demandaInput.getText()));
-            descuentoDeter.setCosto_orden(Float.parseFloat(ordenInput.getText()));
-            if(tiempoInput.getText().isEmpty() != true)
+        PuntosDeQuiebreView quiebre = new PuntosDeQuiebreView(0);
+        try
+        { 
+            if(descuentoInput.getText().isEmpty() != true)
             {
-                descuentoDeter.setTiempo_carga(Float.parseFloat(tiempoInput.getText()));   
+                if(validaciones() != true)
+                {
+                    DeterministaDescuento descuentoDeter = new DeterministaDescuento();//NO!!!, CAMBIAR!
+            
+                    descuentoDeter.setDemanda(Integer.parseInt(demandaInput.getText()));
+                    descuentoDeter.setCosto_orden(Float.parseFloat(ordenInput.getText()));
+                    if(tiempoInput.getText().isEmpty() != true)
+                    {
+                        descuentoDeter.setTiempo_carga(Float.parseFloat(tiempoInput.getText()));   
+                    }
+                    descuentoDeter.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText()));
+                    descuentoDeter.setCosto_mantener(mantenimientoInput.getText());
+            
+                    ArrayList<Double> limit = new ArrayList<Double>();
+                    limit = quiebre.getLimite();
+                    descuentoDeter.setLimiteInfDescuento(limit);
+            
+                    ArrayList<Float> porcent = new ArrayList<Float>();
+                    porcent = quiebre.getPorcentaje();
+                    descuentoDeter.setDescuentos(porcent);
+                    descuentoDeter.llenarOptimo();
+                    RespuestaDescuentoView respuestaDesFrame = new RespuestaDescuentoView(unidad, Integer.parseInt(descuentoInput.getText()), descuentoDeter);
+                    respuestaDesFrame.setVisible(true);  
+                    
+                }
             }
-            descuentoDeter.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText()));
-            descuentoDeter.setCosto_mantener(mantenimientoInput.getText());
-            
-            ArrayList<Double> limit = new ArrayList<Double>();
-            limit = quiebre.getLimite();
-            descuentoDeter.setLimiteInfDescuento(limit);
-            
-            ArrayList<Float> porcent = new ArrayList<Float>();
-            porcent = quiebre.getPorcentaje();
-            descuentoDeter.setDescuentos(porcent);
-            
-           
-            
-            RespuestaDescuentoView respuestaDesFrame = new RespuestaDescuentoView(unidad, Integer.parseInt(descuentoInput.getText()), descuentoDeter);
-            respuestaDesFrame.setVisible(true);     
-        }
         
-        if(escasezInput.getText().isEmpty() == true && descuentoInput.getText().isEmpty() == true)
-        {
-            DeterministaBasico basico = new DeterministaBasico();//NO!!!, CAMBIAR!
-            basico.setDemanda(Integer.parseInt(demandaInput.getText()));
-            basico.setCosto_orden(Float.parseFloat(ordenInput.getText()));
-            if(tiempoInput.getText().isEmpty() != true)
+            if(escasezInput.getText().isEmpty() == true && (descuentoInput.getText().isEmpty() == true))
             {
-                basico.setTiempo_carga(Float.parseFloat(tiempoInput.getText())); 
-            }
+                if(validaciones() != true)
+                {
+ 
+                    DeterministaBasico basico = new DeterministaBasico();//NO!!!, CAMBIAR!
+                    basico.setDemanda(Integer.parseInt(demandaInput.getText()));
+                    basico.setCosto_orden(Float.parseFloat(ordenInput.getText()));
+                    if(tiempoInput.getText().isEmpty() != true)
+                    {
+                        basico.setTiempo_carga(Float.parseFloat(tiempoInput.getText())); 
+                    }
             
-            if(adquisicionInput.getText().isEmpty() != true)
-            {
-                basico.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText())); 
-            }
+                    if(adquisicionInput.getText().isEmpty() != true)
+                    {
+                        basico.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText())); 
+                    }
             
-            basico.setCosto_mantener(mantenimientoInput.getText());
-            RespuestaBasicoView respuestaBasicoFrame = new RespuestaBasicoView(basico, unidad);
-            respuestaBasicoFrame.setVisible(true);   
-        }
+                    basico.setCosto_mantener(mantenimientoInput.getText());
+                    RespuestaBasicoView respuestaBasicoFrame = new RespuestaBasicoView(basico, unidad);
+                    respuestaBasicoFrame.setVisible(true);  
+                }
+            }
         
-        if(escasezInput.getText().isEmpty() != true)
-        {
-            DeterministaEscasez escasezDeter = new DeterministaEscasez(); 
-            escasezDeter.setDemanda(Integer.parseInt(demandaInput.getText()));
-            escasezDeter.setCosto_orden(Float.parseFloat(ordenInput.getText()));
-            if(tiempoInput.getText().isEmpty() != true)
+            if(escasezInput.getText().isEmpty() != true)
             {
-                escasezDeter.setTiempo_carga(Float.parseFloat(tiempoInput.getText())); 
-            }
+                
+                if(validaciones() != true)
+                {
+                    DeterministaEscasez escasezDeter = new DeterministaEscasez(); 
+                    escasezDeter.setDemanda(Integer.parseInt(demandaInput.getText()));
+                    escasezDeter.setCosto_orden(Float.parseFloat(ordenInput.getText()));
+                    if(tiempoInput.getText().isEmpty() != true)
+                    {
+                        escasezDeter.setTiempo_carga(Float.parseFloat(tiempoInput.getText())); 
+                    }
             
-            if(adquisicionInput.getText().isEmpty() != true)
-            {
-                escasezDeter.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText())); 
-            }
+                    if(adquisicionInput.getText().isEmpty() != true)
+                    {
+                        escasezDeter.setCosto_adquisicion(Float.parseFloat(adquisicionInput.getText())); 
+                    }
             
-            escasezDeter.setCosto_mantener(mantenimientoInput.getText());
-            escasezDeter.setEscasez(Float.parseFloat(escasezInput.getText()));
-            RespuestaBasicoView respuestaBasicoFrame = new RespuestaBasicoView(escasezDeter, unidad);
-            respuestaBasicoFrame.setVisible(true);
+                    escasezDeter.setCosto_mantener(mantenimientoInput.getText());
+                    escasezDeter.setEscasez(Float.parseFloat(escasezInput.getText()));
+                    RespuestaBasicoView respuestaBasicoFrame = new RespuestaBasicoView(escasezDeter, unidad);
+                    respuestaBasicoFrame.setVisible(true);
+                }
+            }    
         }
+        catch(Exception excepcion)
+        {      
+            if(demandaInput.getText().isEmpty() == true )
+            {
+                JOptionPane.showMessageDialog(null,"Error: La demanda no puede ser nula","ERROR",JOptionPane.ERROR_MESSAGE);     
+            }
+            if(ordenInput.getText().isEmpty() == true )
+            {
+                JOptionPane.showMessageDialog(null,"Error: El costo de orden no puede ser nulo","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
             
+            if(mantenimientoInput.getText().isEmpty() == true )
+            {
+                JOptionPane.showMessageDialog(null,"Error: El costo de mantenimiento no puede ser nulo","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+            if(quiebre.getLimite() == null && quiebre.getPorcentaje() == null && descuentoInput.getText().isEmpty() == false)
+            {
+                JOptionPane.showMessageDialog(null,"Error: Los puntos de quiebres con sus respectivos descuentos no fueron ingresados","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+            else if(quiebre.getLimite() == null && descuentoInput.getText().isEmpty() == false)
+            {
+                JOptionPane.showMessageDialog(null,"Error: Los puntos de quiebres no fueron ingresados","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+            else if(quiebre.getPorcentaje() == null && descuentoInput.getText().isEmpty() == false)
+            {
+                    JOptionPane.showMessageDialog(null,"Error: Los descuentos de cada punto de quiebre no fueron ingresados","ERROR",JOptionPane.ERROR_MESSAGE);
+            }
+              
+            JOptionPane.showMessageDialog(null,"Error: "+excepcion.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+        }       
            
     }//GEN-LAST:event_resolveButtonActionPerformed
 
@@ -407,17 +452,16 @@ public class DeterministaBasicoView extends javax.swing.JFrame
         resolveButton.setFocusable(false);   
     }
     
-    private void setCasoDescuento(int intervalos)
+    private void setCasoDescuento()
     {
-        if(intervalos != 0)
-        {
-            jMenuBar1.setVisible(true);
+        
             editMenu.addMouseListener(new MouseListener(){
 
                 @Override
                 public void mouseClicked(MouseEvent me) {
                     //RESOLVER QUE NO SE MANTENGA PRESIONADO
-                    PuntosDeQuiebreView descuentosFrame = new PuntosDeQuiebreView(intervalos);
+                   
+                    PuntosDeQuiebreView descuentosFrame = new PuntosDeQuiebreView(Integer.parseInt(descuentoInput.getText()));
                     descuentosFrame.setVisible(true);
                 }
 
@@ -441,7 +485,7 @@ public class DeterministaBasicoView extends javax.swing.JFrame
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 }
             });
-        }
+        
     }
 
     private void restringirTeclas()//PONER BIEN LAS RESTRICCIONES
@@ -486,16 +530,33 @@ public class DeterministaBasicoView extends javax.swing.JFrame
             @Override
             public void keyReleased(KeyEvent ke)
             {
-                if(descuentoInput.getText() != "")
+                if(descuentoInput.getText().isEmpty() == false)
                 {
-                    setCasoDescuento(Integer.parseInt(descuentoInput.getText()));   
+                    jMenuBar1.setVisible(true);             
+                      
+                }
+                else
+                { 
+
+                    jMenuBar1.setVisible(false);
                 }
                 
-                
+                if(descuentoInput.getText().matches("0"))
+                {
+                    jMenuBar1.setVisible(false);             
+                      
+                }
+             
             }
         });
+        setCasoDescuento();
         
         demandaInput.addKeyListener(eventosDeTecla);//poner el resto
+        ordenInput.addKeyListener(eventosDeTecla);
+        tiempoInput.addKeyListener(eventosDeTecla);
+        adquisicionInput.addKeyListener(eventosDeTecla);
+        descuentoInput.addKeyListener(eventosDeTecla);
+        escasezInput.addKeyListener(eventosDeTecla);
         
     }
     
@@ -507,7 +568,99 @@ public class DeterministaBasicoView extends javax.swing.JFrame
         tiempoInput.setText("");
         adquisicionInput.setText("");
         descuentoInput.setText("");
+        escasezInput.setText("");
         System.gc();
     }
+    
+    public boolean validaciones()
+    {
+        if(mantenimientoInput.getText().contains("%") && (adquisicionInput.getText().isEmpty()== true || adquisicionInput.getText().equals("0") ))
+        {
+                JOptionPane.showMessageDialog(null,"Error: Si el costo de mantenimiento es con %, el costo de adquisición no\n"+ "puede ser nulo","ERROR",JOptionPane.ERROR_MESSAGE);
+                return true;
+        }
+        if(((mantenimientoInput.getText().indexOf("%"))==-1) && (descuentoInput.getText().isEmpty()!= true || descuentoInput.getText().equals("0")))
+        {
+                JOptionPane.showMessageDialog(null,"Error: Si el problema a cuestión es de descuento, el costo de mantenimiento \n" + "debe ser con porcentaje (%)","ERROR",JOptionPane.ERROR_MESSAGE);
+                return true;
+        }
+        
+        if(demandaInput.getText().equals("0"))
+        {
+                JOptionPane.showMessageDialog(null,"Error: La demanda no puede ser nula","ERROR",JOptionPane.ERROR_MESSAGE);    
+                return true;
+        }
+        if(ordenInput.getText().equals("0"))
+        {
+                JOptionPane.showMessageDialog(null,"Error: El costo de orden no puede ser nulo","ERROR",JOptionPane.ERROR_MESSAGE);
+                return true;
+        }
+            
+        if(mantenimientoInput.getText().equals("0"))
+        {
+                JOptionPane.showMessageDialog(null,"Error: El costo de mantenimiento no puede ser nulo","ERROR",JOptionPane.ERROR_MESSAGE);
+                return true;
+        }          
+        
+        return false;
+    }
+
+    public JTextField getAdquisicionInput() {
+        return adquisicionInput;
+    }
+
+    public void setAdquisicionInput(JTextField adquisicionInput) {
+        this.adquisicionInput = adquisicionInput;
+    }
+
+    public JTextField getDemandaInput() {
+        return demandaInput;
+    }
+
+    public void setDemandaInput(JTextField demandaInput) {
+        this.demandaInput = demandaInput;
+    }
+
+    public JTextField getDescuentoInput() {
+        return descuentoInput;
+    }
+
+    public void setDescuentoInput(JTextField descuentoInput) {
+        this.descuentoInput = descuentoInput;
+    }
+
+    public JTextField getEscasezInput() {
+        return escasezInput;
+    }
+
+    public void setEscasezInput(JTextField escasezInput) {
+        this.escasezInput = escasezInput;
+    }
+
+    public JTextField getMantenimientoInput() {
+        return mantenimientoInput;
+    }
+
+    public void setMantenimientoInput(JTextField mantenimientoInput) {
+        this.mantenimientoInput = mantenimientoInput;
+    }
+
+    public JTextField getOrdenInput() {
+        return ordenInput;
+    }
+
+    public void setOrdenInput(JTextField ordenInput) {
+        this.ordenInput = ordenInput;
+    }
+
+    public JTextField getTiempoInput() {
+        return tiempoInput;
+    }
+
+    public void setTiempoInput(JTextField tiempoInput) {
+        this.tiempoInput = tiempoInput;
+    }
+    
+    
     
 }

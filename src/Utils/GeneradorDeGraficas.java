@@ -5,12 +5,23 @@
  */
 package Utils;
 
+import java.awt.Color;
+import static java.awt.Color.black;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItem;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.TickUnitSource;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleInsets;
 import problema_inventario.models.DeterministaBasico;
 import problema_inventario.models.DeterministaEscasez;
 import problema_inventario.models.DeterministaGeneral;
@@ -38,7 +49,7 @@ public class GeneradorDeGraficas
           dataset = createDatasetEscasez(general);
       else
           dataset = createDataset(general);
-      System.out.println(general);  
+        
       return ChartFactory.createXYLineChart(
          "Perfil del Inventario",
          "Tiempo en " + unidad ,
@@ -50,51 +61,82 @@ public class GeneradorDeGraficas
     
     public JFreeChart graficarCostos(DeterministaGeneral general, String unidad)
     { 
-        XYDataset dataset;  
-      if(general.getTipo() == "escasez")
-            dataset = createDatasetCostoEscasez(general);
-      else
+        XYDataset dataset;
+        
+       
             dataset = createDatasetCosto(general, unidad);
-      return ChartFactory.createXYLineChart(
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
          "Análisis de Costo de Inventario por " + unidad,
          "Cantidad de pedido" ,
          "Costo" ,
          dataset,
          PlotOrientation.VERTICAL ,
          true , true , false);
+      
+        XYPlot plot = (XYPlot) chart.getPlot();
+        plot.setBackgroundPaint(Color.lightGray);
+        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setRangeGridlinePaint(Color.white);
+        
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(4, black, true);
+        renderer.setSeriesPaint(3, black, true);
+        
+        
+       /* renderer.setShapesFilled(true);
+        renderer.setShapesVisible(true);*/
+       
+        
+        XYPlot plot2 = chart.getXYPlot();
+        NumberAxis rangeAxis = (NumberAxis) plot2.getRangeAxis();
+        rangeAxis.setAutoRange(false);
+        
+        
+        rangeAxis.setUpperBound(general.calcularCostoGrafica(general.calcularCantidadOptimaOrdenar())*2);
+
+        
+        return chart;  
     }
     
     private XYDataset createDatasetCosto(DeterministaGeneral general, String unidad) 
     {
-        
-      XYSeries TCq = new XYSeries("Costo total en "+unidad);          
-      
-      /*float y = general.calcularTCqGrafica(general.calcularCantidadOptimaOrdenar()*3);
-      float ancho = general.calcularCantidadOptimaOrdenar()*3;*/
-      int i =0;
-      
-      for(i = 0; i< general.calcularCantidadOptimaOrdenar()*3; i++)
-      {
     
-          TCq.add(i*10, general.calcularCostoGrafica(i)); 
-          System.out.println(general.calcularCostoGrafica(i));
-          //TCq.add(i+1, general.calcularCostoGrafica(i+1));
+      XYSeries TCq = new XYSeries("Costo total en "+unidad);   
+      XYSeries costoOrden = new XYSeries("Costo de Orden");
+      XYSeries mantener = new XYSeries("Costo de Mantenimiento");
+      XYSeries EOQx = new XYSeries("Punto Optimo (x)");
+      XYSeries EOQy = new XYSeries("Punto Optimo (y)");
+      
+            
+      for(int i = 1; i< general.calcularCantidadOptimaOrdenar()*2; i++)
+      {
+          TCq.add(i, general.calcularCostoGrafica(i));
+          costoOrden.add(i, general.calcularCostoOrdenGrafica(i));
+          mantener.add(i ,general.calcularMantenimientoGrafica(i));
       }
       
-      /*XYSeries mantener = new XYSeries("Costo de Mantenimiento");
-      mantener.add(0,general.calcularMantenimientoGrafica(0.0f));
-      mantener.add(i ,general.calcularMantenimientoGrafica(i));*/
-         
-      final XYSeriesCollection dataset = new XYSeriesCollection( );          
+      EOQx.add(general.calcularCantidadOptimaOrdenar(),0);
+      EOQx.add(general.calcularCantidadOptimaOrdenar(),general.calcularCostoGrafica(general.calcularCantidadOptimaOrdenar()));
+      
+      EOQy.add(0,general.calcularCostoGrafica(general.calcularCantidadOptimaOrdenar()));
+      EOQy.add(general.calcularCantidadOptimaOrdenar(),general.calcularCostoGrafica(general.calcularCantidadOptimaOrdenar()));
+      
+      
+      final XYSeriesCollection dataset = new XYSeriesCollection( );  
+       
       dataset.addSeries( TCq );          
-      //dataset.addSeries(mantener);
+      dataset.addSeries(mantener);
+      dataset.addSeries(costoOrden);
+      dataset.addSeries(EOQx);
+      dataset.addSeries(EOQy);
+      
+      
       return dataset;
     }
     
-    private XYDataset createDatasetCostoEscasez(DeterministaGeneral general)
-    {
-        return null;
-    }
+   
     
     
   

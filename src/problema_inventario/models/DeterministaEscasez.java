@@ -68,7 +68,21 @@ public class DeterministaEscasez extends DeterministaGeneral
 
     public float calcularReorderPoint()
     {
-        return  calcularInvMax() - calcularCantidadOptimaOrdenar(); //EOQ - M
+        if(tiempo_carga == 0)
+        {
+            return  calcularInvMax() - calcularCantidadOptimaOrdenar(); //EOQ - M
+        }
+        else if(tiempo_carga < calcularTiempoEntreOrdenes())
+        {
+            return tiempo_carga * demanda;
+        }
+        else
+        {
+            float le;
+            le = tiempo_carga - (calcularValorEnteroMayor()*calcularTiempoEntreOrdenes());
+            return le*demanda;    
+        }  
+        
     }
 
     public float calcularCostoEscasez()

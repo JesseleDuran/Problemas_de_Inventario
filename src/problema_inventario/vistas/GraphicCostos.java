@@ -7,7 +7,9 @@ package problema_inventario.vistas;
 
 import Utils.GeneradorDeGraficas;
 import java.awt.GridLayout;
+import javafx.scene.chart.NumberAxis;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.plot.XYPlot;
 import problema_inventario.models.DeterministaGeneral;
 
 /**
@@ -60,7 +62,7 @@ public class GraphicCostos extends javax.swing.JFrame {
         );
         panelGraficaLayout.setVerticalGroup(
             panelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 218, Short.MAX_VALUE)
+            .addGap(0, 323, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -90,7 +92,8 @@ public class GraphicCostos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        // TODO add your handling code here:
+       
+        dispose() ;
     }//GEN-LAST:event_okButtonActionPerformed
     
    
@@ -115,9 +118,10 @@ public class GraphicCostos extends javax.swing.JFrame {
     private void initChart() 
     {
        chart = new ChartPanel(null);
+     
        //Sigleton Pattern!
        chart.setChart(GeneradorDeGraficas.getInstance().graficarCostos(problema, unidad));
-       //chart.setChart(GeneradorDeGraficas.getInstance().graficarCostos(problema, unidad));
+       
    }
 }
 

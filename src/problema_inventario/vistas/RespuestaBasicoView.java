@@ -24,7 +24,6 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         initComponents();
         initLabel(unidad);
         this.problema = general;
-        System.out.println(problema);  
         this.unidad = unidad;
         if(general.getTipo().equals("basico"))
         {
@@ -36,6 +35,7 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
             initResultEscasez((DeterministaEscasez) general);
             
         }
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
         
     }
@@ -212,25 +212,25 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Punto para el nuevo pedido");
+        jLabel12.setText("Punto de reorden");
         jLabel12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Costo total de pedidos");
+        jLabel13.setText("Costo de pedidos");
         jLabel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Costo total de mantenimiento");
+        jLabel14.setText("Costo de mantenimiento");
         jLabel14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel15.setBackground(new java.awt.Color(255, 255, 255));
         jLabel15.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Costo de inventario en un tiempo usado");
+        jLabel15.setText("Costo total de inventario ");
         jLabel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
@@ -343,7 +343,7 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         backorderLabel.setBackground(new java.awt.Color(255, 255, 255));
         backorderLabel.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
         backorderLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        backorderLabel.setText("Máximo de órdenes pendientes");
+        backorderLabel.setText("Máximo de escasez");
         backorderLabel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         reorderInput.setEditable(false);
@@ -359,7 +359,7 @@ public class RespuestaBasicoView extends javax.swing.JFrame {
         jLabel17.setBackground(new java.awt.Color(255, 255, 255));
         jLabel17.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Costo total de escasez");
+        jLabel17.setText("Costo de escasez");
         jLabel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         costoEscasezInput.setEditable(false);
