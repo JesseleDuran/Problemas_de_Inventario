@@ -39,10 +39,13 @@ public class MainFrame extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         tiempoField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         acceptButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        deterministaRadioButton1 = new javax.swing.JRadioButton();
+        probabilisticoRadioButton2 = new javax.swing.JRadioButton();
         ayudaBar = new javax.swing.JMenuBar();
         menuEjemplos = new javax.swing.JMenu();
         ayudaItem = new javax.swing.JMenu();
@@ -77,6 +80,19 @@ public class MainFrame extends javax.swing.JFrame
             }
         });
 
+        buttonGroup1.add(deterministaRadioButton1);
+        deterministaRadioButton1.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        deterministaRadioButton1.setText("Problema de Inventario Determinístico");
+
+        buttonGroup1.add(probabilisticoRadioButton2);
+        probabilisticoRadioButton2.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
+        probabilisticoRadioButton2.setText("Problema de Inventario Probabilístico");
+        probabilisticoRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                probabilisticoRadioButton2ActionPerformed(evt);
+            }
+        });
+
         menuEjemplos.setText("Ejemplos");
         menuEjemplos.setFont(new java.awt.Font("Roboto Cn", 0, 12)); // NOI18N
         ayudaBar.add(menuEjemplos);
@@ -92,30 +108,41 @@ public class MainFrame extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tiempoField, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(acceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGap(89, 89, 89))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tiempoField, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deterministaRadioButton1)
+                            .addComponent(probabilisticoRadioButton2))))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tiempoField)
+                .addGap(27, 27, 27)
+                .addComponent(deterministaRadioButton1)
+                .addGap(27, 27, 27)
+                .addComponent(probabilisticoRadioButton2)
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tiempoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,9 +151,18 @@ public class MainFrame extends javax.swing.JFrame
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
       
         String unidad = tiempoField.getText();
-   
-        InputView basicoFrame = new InputView(unidad);
-        basicoFrame.setVisible(true);        
+        
+        if(deterministaRadioButton1.isSelected()==true)
+        {
+            InputView basicoFrame = new InputView(unidad);
+            basicoFrame.setVisible(true);
+        }
+        if(probabilisticoRadioButton2.isSelected()==true)
+        {
+            InputProbView probFrame = new InputProbView(unidad);
+            probFrame.setVisible(true);
+        }
+                
       
     }//GEN-LAST:event_acceptButtonActionPerformed
     
@@ -138,14 +174,21 @@ public class MainFrame extends javax.swing.JFrame
        
     }//GEN-LAST:event_tiempoFieldActionPerformed
 
+    private void probabilisticoRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_probabilisticoRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_probabilisticoRadioButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
     private javax.swing.JMenuBar ayudaBar;
     private javax.swing.JMenu ayudaItem;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JRadioButton deterministaRadioButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu menuEjemplos;
+    private javax.swing.JRadioButton probabilisticoRadioButton2;
     private javax.swing.JTextField tiempoField;
     // End of variables declaration//GEN-END:variables
     private ButtonGroup buttonGroup;

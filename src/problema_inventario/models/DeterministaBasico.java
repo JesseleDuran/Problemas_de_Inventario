@@ -50,6 +50,10 @@ public class DeterministaBasico extends DeterministaGeneral
         
     }
 
+    void setCosto_mantener(float costo_mantener) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     
 }

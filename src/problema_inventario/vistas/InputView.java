@@ -305,10 +305,19 @@ public class InputView extends javax.swing.JFrame
                     porcent = quiebre.getPorcentaje();
                     descuentoDeter.setDescuentos(porcent);
                     descuentoDeter.llenarOptimo();
+                    
+                    DeterministaBasico mejor = new DeterministaBasico();
+                    mejor = descuentoDeter.llenarOptimo();
+                    mejor.toString();
+                    
                     RespuestaDescuentoView respuestaDesFrame = new RespuestaDescuentoView(unidad, Integer.parseInt(descuentoInput.getText()), descuentoDeter);
-                    respuestaDesFrame.setVisible(true);  
+                    respuestaDesFrame.setVisible(true);
+                    
+                    
                     
                 }
+                
+                
             }
         
             if(escasezInput.getText().isEmpty() == true && (descuentoInput.getText().isEmpty() == true))

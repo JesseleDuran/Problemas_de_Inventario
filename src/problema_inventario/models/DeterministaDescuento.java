@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class DeterministaDescuento extends DeterministaBasico
 {
-    DeterministaBasico optimo;
+
     ArrayList<Double> limiteInfDescuento = new ArrayList<Double>();  
     ArrayList<Float> descuentos = new ArrayList<Float>();//LISTA DE LOS DESCUENTOS (4%, 5%...) que pasarán a ser 0.04, 0.05
     ArrayList<Double> listaEOQ = new ArrayList<Double>();
@@ -231,10 +231,10 @@ public class DeterministaDescuento extends DeterministaBasico
         
         return listaFactible;
     }
-
-    //TERMINAR   
-    public void llenarOptimo()
+  
+    public DeterministaBasico llenarOptimo()
     {
+        DeterministaBasico optimo = new DeterministaBasico();
         int efectivo = calcularMenorElemento();    
         ArrayList<Float> valorDescontado = calcularCostosAdquisicionDescuentos(); 
 
@@ -242,12 +242,14 @@ public class DeterministaDescuento extends DeterministaBasico
         {   
             if(i == efectivo) 
             {
+                optimo.setDemanda(demanda);
+                optimo.setCosto_orden(costo_orden);
+                optimo.setCosto_mantener(Float.toString(costo_mantener));
+                optimo.setTiempo_carga(tiempo_carga);
                 optimo.setCosto_adquisicion(valorDescontado.get(i));    
-            }
-        
+            }  
         }
-        System.out.println(optimo);
-
+        return optimo;
     }
 
   

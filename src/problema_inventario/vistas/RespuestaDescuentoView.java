@@ -29,12 +29,13 @@ public class RespuestaDescuentoView extends javax.swing.JFrame {
         super("Análisis de costos de inventario por "+ unidad + " para el modelo Determinista con Descuentos por Volumen");
         initComponents();
         this.intervalos = intervalos;
-        this.problema = problema;
-        
+        this.problema = problema;   
         
         initPanel();
         addtablaInput();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
