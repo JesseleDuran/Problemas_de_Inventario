@@ -8,6 +8,7 @@ package problema_inventario.vistas;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import problema_inventario.models.Probabilistico;
 
 /**
@@ -164,7 +165,7 @@ public class InputProbView extends javax.swing.JFrame {
         varianzaTiempoLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         escasezLabel.setFont(new java.awt.Font("Roboto Cn", 1, 12)); // NOI18N
-        escasezLabel.setText("Costo unitario por Escasez:");
+        escasezLabel.setText("Costo de Escasez Unitaria:");
         escasezLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         escasezInput.setFont(new java.awt.Font("Roboto Cn", 0, 14)); // NOI18N
@@ -294,24 +295,24 @@ public class InputProbView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(128, 128, 128)
                 .addComponent(eraseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(resolveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addGap(135, 135, 135))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eraseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(resolveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -373,11 +374,14 @@ public class InputProbView extends javax.swing.JFrame {
                     {
                         probabilistico.setCosto_venta(Float.parseFloat(costoVentaInput.getText())); 
                     }
+                    else
+                    {
+                        probabilistico.setCosto_venta(0);
+                    }
                     
                     probabilistico.setCostoUnitEscasez(Float.parseFloat(escasezInput.getText()));
-                    
-                    
-                    RespuestaBasicoView respuestaBasicoFrame = new RespuestaBasicoView(probabilistico, unidad);
+                  
+                    RespuestaProb respuestaBasicoFrame = new RespuestaProb(probabilistico, unidad);
                     respuestaBasicoFrame.setVisible(true);
             }
         }
@@ -398,7 +402,7 @@ public class InputProbView extends javax.swing.JFrame {
             }
             
               
-            //JOptionPane.showMessageDialog(null,"Error: "+excepcion.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Error: "+excepcion.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
         }  
         
 
@@ -443,10 +447,10 @@ private String unidad;
 
 private void initLabel() 
     {
-      demandaLabel.setText("Demanda por " + unidad);
+      demandaLabel.setText("Media de la demanda por " + unidad);
       mantenimientoLabel.setText("Costo unitario de mantenimiento por " + unidad+":");
       jLabel6.setText("Tiempo de espera para una nueva orden en " + unidad+":");
-      escasezLabel.setText("Costo de escasez unitaria por "+ unidad+":");
+      varianzaTiempoLabel.setText("Varianza de tiempo de entrega en "+ unidad+":");
     }
 
 private void initButtons()
@@ -480,7 +484,7 @@ private void restringirTeclas()//PONER BIEN LAS RESTRICCIONES
             public void keyTyped(KeyEvent ke) 
             {
                char caracter = ke.getKeyChar();
-                if(((caracter < '0') || (caracter > '9')) && (caracter != '\b' /*corresponde a BACK_SPACE*/))
+                if(((caracter < '0') || (caracter > '9')) && (caracter != '\b' /*corresponde a BACK_SPACE*/)&&(caracter != '.') &&(caracter != '/') )
                    ke.consume();  
             }
 
@@ -514,18 +518,13 @@ private void restringirTeclas()//PONER BIEN LAS RESTRICCIONES
                 JOptionPane.showMessageDialog(null,"Error: Si el costo de mantenimiento es con %, el costo de adquisición no\n"+ "puede ser nulo","ERROR",JOptionPane.ERROR_MESSAGE);
                 return true;
         }
-        if(((mantenimientoInput.getText().indexOf("%"))==-1) && (descuentoInput.getText().isEmpty()!= true || descuentoInput.getText().equals("0")))
-        {
-                JOptionPane.showMessageDialog(null,"Error: Si el problema a cuestión es de descuento, el costo de mantenimiento \n" + "debe ser con porcentaje (%)","ERROR",JOptionPane.ERROR_MESSAGE);
-                return true;
-        }
         
         if(demandaInput.getText().equals("0"))
         {
                 JOptionPane.showMessageDialog(null,"Error: La demanda no puede ser nula","ERROR",JOptionPane.ERROR_MESSAGE);    
                 return true;
         }
-        if(ordenInput.getText().equals("0"))
+        if(costoOrdenInput.getText().equals("0"))
         {
                 JOptionPane.showMessageDialog(null,"Error: El costo de orden no puede ser nulo","ERROR",JOptionPane.ERROR_MESSAGE);
                 return true;
@@ -539,6 +538,80 @@ private void restringirTeclas()//PONER BIEN LAS RESTRICCIONES
         
         return false;
     }
+
+    public JTextField getAdquisicionInput() {
+        return adquisicionInput;
+    }
+
+    public void setAdquisicionInput(JTextField adquisicionInput) {
+        this.adquisicionInput = adquisicionInput;
+    }
+
+    public JTextField getCostoOrdenInput() {
+        return costoOrdenInput;
+    }
+
+    public void setCostoOrdenInput(JTextField costoOrdenInput) {
+        this.costoOrdenInput = costoOrdenInput;
+    }
+
+    public JTextField getCostoVentaInput() {
+        return costoVentaInput;
+    }
+
+    public void setCostoVentaInput(JTextField costoVentaInput) {
+        this.costoVentaInput = costoVentaInput;
+    }
+
+    public JTextField getDemandaInput() {
+        return demandaInput;
+    }
+
+    public void setDemandaInput(JTextField demandaInput) {
+        this.demandaInput = demandaInput;
+    }
+
+    public JTextField getDesvDemandaInput() {
+        return desvDemandaInput;
+    }
+
+    public void setDesvDemandaInput(JTextField desvDemandaInput) {
+        this.desvDemandaInput = desvDemandaInput;
+    }
+
+    public JTextField getEscasezInput() {
+        return escasezInput;
+    }
+
+    public void setEscasezInput(JTextField escasezInput) {
+        this.escasezInput = escasezInput;
+    }
+
+    public JTextField getMantenimientoInput() {
+        return mantenimientoInput;
+    }
+
+    public void setMantenimientoInput(JTextField mantenimientoInput) {
+        this.mantenimientoInput = mantenimientoInput;
+    }
+
+    public JTextField getTiempoInput() {
+        return tiempoInput;
+    }
+
+    public void setTiempoInput(JTextField tiempoInput) {
+        this.tiempoInput = tiempoInput;
+    }
+
+    public JTextField getVarianzaTimeInput() {
+        return varianzaTimeInput;
+    }
+
+    public void setVarianzaTimeInput(JTextField varianzaTimeInput) {
+        this.varianzaTimeInput = varianzaTimeInput;
+    }
+    
+    
 
 
 

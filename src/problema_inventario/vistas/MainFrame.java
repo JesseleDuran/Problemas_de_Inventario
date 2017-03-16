@@ -231,50 +231,48 @@ public class MainFrame extends javax.swing.JFrame
         });
         menuEjemplos.add(ej1);
         //EJEMPLO 2
+        InputProbView problemaProb = new InputProbView("Años");
         JMenuItem ej2 = new JMenuItem("Ejemplo 2");
-        /*ej2.addActionListener(new ActionListener()
+        ej2.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)
             {
-                String textoPlanteamiento = "Una refinería de petróleo tiene dos fuentes de petróleo crudo: crudo ligero, que cuesta 35 dólares por barril y crudo \n"+
-                                            "pesado a 30 dólares el barril. Con cada barril de crudo ligero, la refinería produce 0,3 barriles de gasolina (G), 0,2 \n"+
-                                            "barriles de combustible para calefacción (C) y 0,3 barriles de combustible para turbinas (T), mientras que con cada \n"+
-                                            "barril de crudo pesado produce 0,3 barriles de G, 0,4 barriles de C y 0,2 barriles de T. La refinería ha contratado el \n"+
-                                            "suministro de 900000 barriles de G, 800000 barriles de C y 500000 barriles de T. Hallar las cantidades de crudo ligero y \n"+
-                                            "pesado que debe comprar para poder cubrir sus necesidades al costo mínimo.\n";
+                String textoPlanteamiento = "La demanda de un artículo en una empresa se distribuye normalmente con una media de 300 unidades al año y una  \n"+
+                                            "desviación estándar de 30 artículos. El costo de hacer un pedido es de $60, el costo de un artículo es de $40 y la vende en  \n"+
+                                            "50$, el costo por unidad agotada es de $6 por año y el costo anual de almacenamiento es de 25% del valor del artículo. La  \n"+
+                                            "duración del Tiempo de entrega es aleatorio con media 80 días y varianza 4 días. Todo el agotamiento de existencia origina  \n"+
+                                            "perdida de venta. \n";
 
-                // x1 = Cantidad de crudo ligero.
-                // x2 = Cantidad de crudo pesado.
+                String demanda ="300";
+                String desviacion_demanda = "30";
+                String costoMantener = "25%";
+                String leadTime = "0.22";
+                String varianzaLeadTime = "0.011";
+                String p = "40";
+                String costoOrden = "60";
+                String costo_venta = "50";
+                String costo_escasez_unitaria = "6";
 
-                String funcionObjetivo = "Min z = 35x1 + 30x2";
-
-                //s.a
-
-                String r1 = "0.3x1 + 0.3x2 >= 900000";
-                String r2 = "0.2x1 + 0.4x2 >= 800000";
-                String r3 = "0.3x1 + 0.3x2 >= 500000";
+                
 
                 if(JOptionPane.showConfirmDialog(null,textoPlanteamiento+"¿Ingresar al programa?"
                                                         ,"Planteamiento Ejemplo 2",
                         JOptionPane.YES_NO_OPTION)== JOptionPane.YES_OPTION)
                     {
 
-                        if(funcionObjetivoInput.getText().isEmpty() && restricciones.size()==0)
-                        {
-
-                            funcionObjetivoInput.setText(funcionObjetivo);
-                            addRestriccionInput();
-                            addRestriccionInput();
-                            addRestriccionInput();
-                            restricciones.get(0).setText(r1);
-                            restricciones.get(1).setText(r2);
-                            restricciones.get(2).setText(r3); 
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(null,"Recuerda Borrar Todo antes de ingresar un ejemplo",
-                                "Alerta", JOptionPane.ERROR_MESSAGE);
-                        }
+                        problemaProb.setVisible(true);
+                        problemaProb.getDemandaInput().setText(demanda);
+                        problemaProb.getDesvDemandaInput().setText(desviacion_demanda);
+                        problemaProb.getMantenimientoInput().setText(costoMantener);
+                        problemaProb.getTiempoInput().setText(leadTime);
+                        problemaProb.getVarianzaTimeInput().setText(varianzaLeadTime);
+                        problemaProb.getAdquisicionInput().setText(p);
+                        problemaProb.getCostoOrdenInput().setText(costoOrden);
+                        problemaProb.getCostoVentaInput().setText(costo_venta);
+                        problemaProb.getEscasezInput().setText(costo_escasez_unitaria);
+                        
+                        
+                        
 
                     }
             }
@@ -282,7 +280,7 @@ public class MainFrame extends javax.swing.JFrame
         menuEjemplos.add(ej2);
 
 
-        JMenuItem ej3 = new JMenuItem("Ejemplo 3");
+        /*JMenuItem ej3 = new JMenuItem("Ejemplo 3");
         ej3.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)

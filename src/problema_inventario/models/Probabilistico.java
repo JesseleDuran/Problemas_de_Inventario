@@ -107,12 +107,6 @@ public class Probabilistico extends DeterministaGeneral
     }
     
     
-    public float calcularCls()
-    {
-        return ((costo_venta-costo_adquisicion)+costoUnitEscasez);
-    }
-    
-    
     @Override
     public float calcularCantidadOptimaOrdenar() 
     {
@@ -122,19 +116,47 @@ public class Probabilistico extends DeterministaGeneral
 
     @Override
     public float calcularCostoTotalMantenimiento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return (float) (costo_mantener*((calcularCantidadOptimaOrdenar()/2)+calcularR()-calcularEX()));
     }
 
     @Override
     public float calcularTCU() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(costo_venta == 0)
+        {
+            return (float) (costo_mantener*((calcularCantidadOptimaOrdenar()/2) 
+                    + calcularR() - calcularEX()) 
+                    + (costoUnitEscasez*costoUnitEscasez*demanda)/calcularCantidadOptimaOrdenar() 
+                    + (costo_orden*demanda)/calcularCantidadOptimaOrdenar());
+        }
+        else
+        {
+            return (float) (costo_mantener*((calcularCantidadOptimaOrdenar()/2) 
+                    + calcularR() - calcularEX()) 
+                    + (calcularCls()*calcularCls()*demanda)/calcularCantidadOptimaOrdenar() 
+                    + (costo_orden*demanda)/calcularCantidadOptimaOrdenar());
+            
+        }
+    }
+    
+     public  double costo_escasez_anual()
+     {
+        return (costoUnitEscasez*costoUnitEscasez*demanda)/calcularCantidadOptimaOrdenar();
+  
+    }
+    
+    
+   
+    
+    public static long Costos_totales(long Q, double ED, double R, double h, double EX, double K, double cb, double EBR)
+    {
+        double CTA=h*(Q/2+R-EX)+(cb*EBR*ED)/Q+(K*ED)/Q;
+        return Math.round(CTA);
     }
 
     @Override
     public float calcularMantenimientoGrafica(float eoq) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    }    
     
     //metodos de la clase
     public double buscar_valor(double valor){
@@ -158,20 +180,20 @@ public class Probabilistico extends DeterministaGeneral
     {
         if(costo_venta == 0)
         {   
-            float Z = 1 - punto_de_reorden_optimo_pendientes();
-            return (float) buscar_valor(Z); 
+            double Z = 1 - punto_de_reorden_optimo_pendientes();
+            return buscar_valor(Z); 
         }
         else
         {
-            float Z = 1 - punto_de_reorden_optimo_perdidas();
-            return (float) buscar_valor(Z); 
+            double Z = 1 - punto_de_reorden_optimo_perdidas();
+            return buscar_valor(Z); 
         }
         
     }
     
     public float punto_de_reorden_optimo_pendientes()
     {
-        return ((costo_mantener*calcularCantidadOptimaOrdenar())/(costo_venta*demanda));
+        return ((costo_mantener*calcularCantidadOptimaOrdenar())/(costoUnitEscasez*demanda));
 
     }
     
@@ -184,60 +206,60 @@ public class Probabilistico extends DeterministaGeneral
     
     public float calcularEX()
     {
-        return tiempo_carga*demanda;
+        return calcularPtoReorden();
     }
     
     //DUDA CÓMO
-    public static double calcularVARX(double L, double VARD)
+    /*public static double calcularVARX(double L, double VARD)
     {
         System.out.println(L*VARD);
         return (L*VARD);
-    }
+    }*/
     
-    public double calcularVARXAL(double EL, double VARD, double VARL, double ED)
+    public double calcularVARXAL()
     {
-        return ((tiempo_carga*demanda)+ Math.pow(demanda,2)*tiempo_carga);
+        System.out.println((tiempo_carga*Math.pow(desvDemanda,2))+ Math.pow(demanda,2)*varianzaL);
+        return ((tiempo_carga*Math.pow(desvDemanda,2))+ Math.pow(demanda,2)*varianzaL);
     }
  
     public double calcularDESVX()
     {
-        return (demanda*Math.sqrt(tiempo_carga));     
+        return (desvDemanda*Math.sqrt(tiempo_carga));     
     }
     
-    public static double DESVXAL(double varx)
+    public double DESVXAL()
     {
-        System.out.println(Math.sqrt(varx));
-        return Math.sqrt(varx);
+        return (Math.sqrt(calcularVARXAL()));
+        
     }
     
     //pto de reorden
     public double calcularR()
-    {
-        return (calcularZ()*calcularDESVX()) + demanda;
+    {   if(costo_venta == 0 || varianzaL == 0)
+        {
+            return (calcularZ()*calcularDESVX()) + calcularEX();
+        }
+        else
+        {
+            return (calcularZ()*DESVXAL()) + calcularEX();
+        }
+        
     }
     
-    public static double costo_escasez_anual(double CB, long Q, double EBR, double ED)
-    {
-        double resultado=(CB*EBR*ED)/Q;
-        return resultado;
-    }
     
-    public static double costo_mantenimiento_anual(double h, long Q, double r, double EX)
-    {
-        double resultado=h*((Q/2)+r-EX);
-        return resultado;
-    }
-    
-    public static long Costos_totales(long Q, double ED, double R, double h, double EX, double K, double cb, double EBR)
-    {
-        double CTA=h*(Q/2+R-EX)+(cb*EBR*ED)/Q+(K*ED)/Q;
-        return Math.round(CTA);
-    }
     
     public double calcularNivel_de_seguridad()
     {
+        System.out.println("R"+calcularR());
+        System.out.println("EX"+calcularEX());
         return calcularR()-calcularEX();
     }
+    
+    public float calcularCls()
+    {
+        return ((costo_venta-costo_adquisicion)+costoUnitEscasez);
+    }
+    
     
     
     
